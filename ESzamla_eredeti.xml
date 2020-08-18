@@ -1,0 +1,164 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<szamla xmlns="http://www.apeh.hu/2005/szamla" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <fejlec>
+    <elado>
+      <nev>Dombegyházi EURO TÉSZ Kft.</nev>
+      <adoszam>13297150-2-04</adoszam>
+      <edikod>5990073816002</edikod>
+      <idegenkod>5990073816002</idegenkod>
+      <kozadoszam>HU13297150</kozadoszam>
+      <bankszamlaszam>11733003-27312713-00000000</bankszamlaszam>
+      <szamlatulaj />
+      <banknev>Kereskedelmi és Hitelbank Nyilvánosan Működő Rt.</banknev>
+      <bankorszagkod>HU</bankorszagkod>
+      <cim>
+        <orszag>Magyarország</orszag>
+        <telepules>Dombegyház</telepules>
+        <irszam>5836</irszam>
+        <kozternev>Nyéki</kozternev>
+        <kozterjell>major</kozterjell>
+        <hazszam>165/9.</hazszam>
+        <epulet />
+        <lepcsohaz />
+        <emelet />
+        <ajto />
+      </cim>
+    </elado>
+    <vevo>
+      <nev>Lidl Magyarország Kereskedelmi Bt.</nev>
+      <ugyfelkod>30</ugyfelkod>
+      <edikod>4335815000003</edikod>
+      <rendelesvevoedikod />
+      <adoszam>21588017-2-44</adoszam>
+      <kozadoszam>HU21588017</kozadoszam>
+      <banknev />
+      <bankorszagkod />
+      <cim>
+        <orszag>Magyarország</orszag>
+        <telepules>Budapest</telepules>
+        <irszam>1037</irszam>
+        <kozternev>Rádl</kozternev>
+        <kozterjell>árok</kozterjell>
+        <hazszam>6</hazszam>
+        <epulet />
+        <lepcsohaz />
+        <emelet />
+        <ajto />
+      </cim>
+      <szallitasicim>
+        <nev>Lidl-Székesfehérvár</nev>
+        <szalledikod>4335815000058</szalledikod>
+        <cim>
+          <orszag>Magyarország</orszag>
+          <telepules>Székesfehérvár</telepules>
+          <irszam>8000</irszam>
+          <kozternev>Kálmos utca</kozternev>
+        </cim>
+      </szallitasicim>
+      <eszamlacim>
+        <nev>Központi</nev>
+        <eszlaedikod>4335815000003</eszlaedikod>
+        <cim>
+          <orszag>Magyarország</orszag>
+          <telepules>Budapest</telepules>
+          <irszam>1037</irszam>
+          <kozternev>Rádl árok 6</kozternev>
+        </cim>
+      </eszamlacim>
+      <kapcsolattarto>
+        <nev />
+        <telefon />
+      </kapcsolattarto>
+    </vevo>
+    <szamlainfo>
+      <sorszam>SZA00554/2020</sorszam>
+      <kialldatum>2020-08-14</kialldatum>
+      <teljdatum>2020-08-13</teljdatum>
+      <fizhatarido>2020-09-12</fizhatarido>
+      <elszamolaszarodatum />
+      <fizmod>Átutalás (30 nap)</fizmod>
+      <szamlatipusa>normál</szamlatipusa>
+      <hivatkozottszamla />
+      <hivatkozottszamladatum />
+      <megrendeles />
+      <megrazon />
+      <megrendelesdatum />
+      <szallitolevel />
+      <szallitoleveldatum />
+      <termekdij />
+      <egyebadat />
+      <alsomegjegyzes>A csomagolás termékdíj kötelezettség az eladót terheli.</alsomegjegyzes>
+      <penznem>HUF</penznem>
+      <cegadat_egyeb />
+      <uzemmod>E</uzemmod>
+    </szamlainfo>
+  </fejlec>
+  <tetelek>
+    <tetel id="1">
+      <termeknev>Vöröshagyma (20x1 kg/zsák)</termeknev>
+      <termekkod>2020_0010</termekkod>
+      <eankod>5999547310015</eankod>
+      <editermekkod />
+      <besorszam>07031019</besorszam>
+      <mennyegys>kg</mennyegys>
+      <menny>8400</menny>
+      <nettoegysegar>220</nettoegysegar>
+      <bruttoegysegar>279.4</bruttoegysegar>
+      <nettoar>1848000</nettoar>
+      <afakulcs>27</afakulcs>
+      <afaertek>498960</afaertek>
+      <bruttoar>2346960</bruttoar>
+      <megjegyzes>Megrendelés száma: 342590
+Megrendelés kelte: 2020.08.13.
+Szállítólevél száma: NYEUR 20/0000572KI
+Szállítólevél kelte: 2020.08.12.
+Nettó súly: 8400 kg [2020_0010]
+Termékkód: 2020_0010
+Termék egyed:</megjegyzes>
+    </tetel>
+    <tetel id="2">
+      <termeknev>Vöröshagyma (10 kg/zsák)</termeknev>
+      <termekkod>2020_0012</termekkod>
+      <eankod>5999547310039</eankod>
+      <editermekkod />
+      <besorszam>07031019</besorszam>
+      <mennyegys>kg</mennyegys>
+      <menny>4800</menny>
+      <nettoegysegar>200</nettoegysegar>
+      <bruttoegysegar>254</bruttoegysegar>
+      <nettoar>960000</nettoar>
+      <afakulcs>27</afakulcs>
+      <afaertek>259200</afaertek>
+      <bruttoar>1219200</bruttoar>
+      <megjegyzes>Megrendelés száma: 342590
+Megrendelés kelte: 2020.08.13.
+Szállítólevél száma: NYEUR 20/0000572KI
+Szállítólevél kelte: 2020.08.12.
+Nettó súly: 4800 kg [2020_0012]
+Termékkód: 2020_0012
+Termék egyed:</megjegyzes>
+    </tetel>
+  </tetelek>
+  <osszesites>
+    <afarovat id="1">
+      <afakulcs>27</afakulcs>
+      <nettoar>2808000</nettoar>
+      <afaertek>758160</afaertek>
+      <bruttoar>3566160</bruttoar>
+      <ftafaertek>758160</ftafaertek>
+    </afarovat>
+    <vegosszeg>
+      <nettoarossz>2808000</nettoarossz>
+      <afaertekossz>758160</afaertekossz>
+      <bruttoarossz>3566160</bruttoarossz>
+      <fizetendo>3566160</fizetendo>
+      <ftafaertekossz>758160</ftafaertekossz>
+    </vegosszeg>
+  </osszesites>
+  <template>HUN</template>
+  <lablec>Köszönjük a vásárlást!
+
+
+
+A csomagolás termékdíj kötelezettség az eladót terheli.</lablec>
+</szamla>
