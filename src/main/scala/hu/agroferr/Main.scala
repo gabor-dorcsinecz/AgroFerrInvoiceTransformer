@@ -7,8 +7,25 @@ import scala.xml.{Elem, Node, Text, XML}
 
 object Main {
 
-  def main(arg:Array[String]): Unit = {
-    
+  def main(args:Array[String]): Unit = {
+    val folderOrFile = new File(args(0))
+    folderOrFile.isDirectory match {
+      case true =>
+        val allFiles = folderOrFile.listFiles()
+        allFiles.foreach(file => programRunner(file))
+      case false =>
+        programRunner(folderOrFile)
+    }
+
+  }
+
+  def programRunner(fileName:File): Unit = {
+println("Hello Lyanyom: " + fileName.getName)
+    //    val invoiceXml = Main.loadXml(fileName)
+//    val comments = Main.extractComment(invoiceXml)
+//    val invoiceInfo = InvoiceInfo(comments)  //TODO
+//    val transformed = Main.transformXml(invoiceXml,invoiceInfo)
+//    Main.save(fileName, transformed.head)
   }
 
   def loadXml(filePath: String): Elem = XML.loadFile(filePath)
