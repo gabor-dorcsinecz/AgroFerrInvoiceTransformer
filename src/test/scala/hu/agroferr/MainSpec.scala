@@ -12,10 +12,8 @@ class MainSpec extends AnyWordSpec with should.Matchers {
       val fileName = "ESzamla_eredeti.xml"
       val invoiceXml = Main.loadXml(fileName)
       val comments = Main.extractComment(invoiceXml)
-      //println(comments)
-      val invoiceInfo = InvoiceInfo(comments.get)  //TODO
+      val invoiceInfo = InvoiceInfo(comments)  //TODO
       val transformed = Main.transformXml(invoiceXml,invoiceInfo)
-      //println(transformed)
       Main.save(fileName, transformed.head)
     }
   }
@@ -30,7 +28,6 @@ class MainSpec extends AnyWordSpec with should.Matchers {
         |Termékkód: 2020_0010
         |Termék egyed:""".stripMargin
       val invoiceInfo = InvoiceInfo(comment)
-      //println(invoiceInfo)
       invoiceInfo shouldBe InvoiceInfo( "342590", "2020.08.13.", "NYEUR 20/0000572KI", "2020.08.12.")
     }
   }
