@@ -7,6 +7,9 @@ import scala.xml.{Elem, Node, Text, XML}
 
 object Main {
 
+  def main(arg:Array[String]): Unit = {
+    
+  }
 
   def loadXml(filePath: String): Elem = XML.loadFile(filePath)
 
@@ -22,61 +25,34 @@ object Main {
   }
 
   def transformXml(invoice: Elem, invoiceInfo: InvoiceInfo) = {
-    val rule1: RewriteRule = new RewriteRule {
-      override def transform(n: Node): collection.Seq[Node] = n match {
-        case elem: Elem if elem.label == "megrendeles" =>
-          Elem(elem.prefix, elem.label, elem.attributes, elem.scope, false, Text(invoiceInfo.orderNumber))
-        case other => other
-      }
-    }
-    val rule2: RewriteRule = new RewriteRule {
-      override def transform(n: Node): collection.Seq[Node] = n match {
-        case elem: Elem if elem.label == "megrendelesdatum" =>
-          Elem(elem.prefix, elem.label, elem.attributes, elem.scope, false, Text(invoiceInfo.date))
-        case other => other
-      }
-    }
-    val rule3: RewriteRule = new RewriteRule {
-      override def transform(n: Node): collection.Seq[Node] = n match {
-        case elem: Elem if elem.label == "szallitolevel" =>
-          Elem(elem.prefix, elem.label, elem.attributes, elem.scope, false, Text(invoiceInfo.letterNumber))
-        case other => other
-      }
-    }
-    val rule4: RewriteRule = new RewriteRule {
-      override def transform(n: Node): collection.Seq[Node] = n match {
-        case elem: Elem if elem.label == "szallitoleveldatum" =>
-          Elem(elem.prefix, elem.label, elem.attributes, elem.scope, false, Text(invoiceInfo.letterDate))
-        case other => other
-      }
-    }
-    val rule5: RewriteRule = new RewriteRule {
-      override def transform(n: Node): collection.Seq[Node] = n match {
-        case elem: Elem if elem.label == "szamlatulaj" =>
-          println("5" + elem)
-          val companyName = (invoice \ "fejlec" \ "elado" \ "nev").text
-          elem.copy(child = Text(companyName))
-        case other => other
-      }
-    }
-    val rule6: RewriteRule = new RewriteRule {
-      override def transform(n: Node): collection.Seq[Node] = n match {
-        case elem: Elem if elem.label == "banknev" =>
-          println("6" + elem)
-          elem.copy(child = Text("Országos Takarékpénztár és Kereskedelmi Bank"))
-        case other => other
-      }
-    }
+    val rule1 = getRewriteRule("megrendeles", invoiceInfo.orderNumber)
+    val rule2 = getRewriteRule("megrendelesdatum", invoiceInfo.date)
+    val rule3 = getRewriteRule("szallitolevel", invoiceInfo.letterNumber)
+    val rule4 = getRewriteRule("szallitoleveldatum",invoiceInfo.letterDate)
+    val companyName = (invoice \ "fejlec" \ "elado" \ "nev").text
+    val rule5 = getRewriteRule("szamlatulaj", companyName)
+    val rule6 = getRewriteRule("banknev", "Országos Takarékpénztár és Kereskedelmi Bank")
     object rt1 extends RuleTransformer(rule5,rule6)
-    val rule51: RewriteRule = new RewriteRule {
+    val rule4Seller: RewriteRule = new RewriteRule {
       override def transform(n: Node): collection.Seq[Node] = n match {
         case elem: Elem if elem.label == "elado" => rt1(elem)  //This rule uses another rule
         case other => other
       }
     }
 
-    val transformed = new RuleTransformer(rule1, rule2, rule3, rule4, rule51).transform(invoice)
+    val transformed = new RuleTransformer(rule1, rule2, rule3, rule4, rule4Seller).transform(invoice)
     transformed
+  }
+
+
+  def getRewriteRule(matchOnLabel:String,newText:String):RewriteRule = {
+     new RewriteRule {
+      override def transform(n: Node): collection.Seq[Node] = n match {
+        case elem: Elem if elem.label == matchOnLabel =>
+          Elem(elem.prefix, elem.label, elem.attributes, elem.scope, false, Text(newText))
+        case other => other
+      }
+    }
   }
 }
 
@@ -86,7 +62,12 @@ case class InvoiceInfo(orderNumber: String, date: String, letterNumber: String, 
 object InvoiceInfo {
   def apply(comment: String): InvoiceInfo = {
     val lines = comment.split("[\r\n]")
-    InvoiceInfo(valueParser(lines(0)), valueParser(lines(1)), valueParser(lines(2)), valueParser(lines(3)))
+    InvoiceInfo(valueParser(lines(0)), transformDates(valueParser(lines(1))), valueParser(lines(2)), transformDates(valueParser(lines(3))))
+  }
+
+  def transformDates(in:String):String = {
+    val full = in.replaceAll("\\.","- ").trim
+    full.take(full.length-1)
   }
 
   def valueParser(line: String): String = {
@@ -94,3 +75,4 @@ object InvoiceInfo {
     line.substring(idx + 1).trim
   }
 }
+
