@@ -9,7 +9,7 @@ class MainSpec extends AnyWordSpec with should.Matchers {
 
   "This" should {
     "work" in {
-      val fileName = "ESzamla_eredeti.xml"
+      val fileName = new File("ESzamla_eredeti.xml")
       val invoiceXml = Main.loadXml(fileName)
       val comments = Main.extractComment(invoiceXml)
       val invoiceInfo = InvoiceInfo(comments)  //TODO
