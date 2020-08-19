@@ -34,7 +34,7 @@ object Main {
     val nameString = filePath.getName
     val dot = nameString.indexOf(".")
     val fileName = nameString.substring(0, dot)
-    XML.save(fileName + "_modified.xml", contents)
+    XML.save(fileName + "_modified.xml", contents, "utf-8", true)
   }
 
   def extractComment(invoice: Elem) = {
