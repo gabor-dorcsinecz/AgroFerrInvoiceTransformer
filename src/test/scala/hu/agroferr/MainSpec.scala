@@ -28,7 +28,7 @@ class MainSpec extends AnyWordSpec with should.Matchers {
         |Termékkód: 2020_0010
         |Termék egyed:""".stripMargin
       val invoiceInfo = InvoiceInfo(comment)
-      invoiceInfo shouldBe InvoiceInfo( "342590", "2020.08.13.", "NYEUR 20/0000572KI", "2020.08.12.")
+      invoiceInfo shouldBe InvoiceInfo( "342590", "2020- 08- 13", "NYEUR 20/0000572KI", "2020- 08- 12")
     }
   }
 }

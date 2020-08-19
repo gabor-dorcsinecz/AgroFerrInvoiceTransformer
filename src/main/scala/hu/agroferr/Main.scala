@@ -85,7 +85,7 @@ object InvoiceInfo {
 
   def transformDates(in: String): String = {
     val full = in.replaceAll("\\.", "- ").trim
-    full.take(full.length - 1)
+    if (full.lastIndexOf("-") == full.length-1) full.take(full.length - 1) else full
   }
 
   def valueParser(line: String): String = {
