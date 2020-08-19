@@ -7,14 +7,38 @@ import org.scalatest.matchers._
 
 class MainSpec extends AnyWordSpec with should.Matchers {
 
-  "This" should {
-    "work" in {
-      val fileName = new File("ESzamla_eredeti.xml")
-      val invoiceXml = Main.loadXml(fileName)
-      val comments = Main.extractComment(invoiceXml)
-      val invoiceInfo = InvoiceInfo(comments)  //TODO
-      val transformed = Main.transformXml(invoiceXml,invoiceInfo)
-      Main.save(fileName, transformed.head)
+//  val fileName = new File("ESzamla_eredeti.xml")
+//  Main.transformFile(fileName)
+
+  "setupOutputFolder" should {
+    "work on files" in {
+      val inputXml = new File("ESzamla_eredeti.xml")
+      val outputFolder = Main.setupOutputFolder(inputXml)
+      val expectedFolder = (new File("out")).getAbsoluteFile
+      outputFolder shouldBe expectedFolder
+    }
+
+    "work on folders" in {
+      val inputXml = new File(System.getProperty("user.dir")) //(new File(".")).getAbsoluteFile
+      val outputFolder = Main.setupOutputFolder(inputXml)
+      val expectedFolder = (new File("out")).getAbsoluteFile
+      outputFolder shouldBe expectedFolder
+    }
+  }
+
+  "transformFiles" should {
+    "work on single files" in {
+      val fileName = "ESzamla_eredeti.xml"
+      val inputXml = new File(fileName)
+      val outFiles = Main.transformFiles(inputXml)
+      val expectedFile = new File(System.getProperty("user.dir") + File.separator + "out" + File.separator + fileName)
+      outFiles shouldBe List(expectedFile)
+    }
+
+    "work on folders" in {
+      val inputXml = new File(System.getProperty("user.dir"))
+      val outFiles = Main.transformFiles(inputXml)
+      outFiles.size shouldBe 2
     }
   }
 

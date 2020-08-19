@@ -9,33 +9,49 @@ object Main {
 
   def main(args: Array[String]): Unit = {
     val folderOrFile = new File(args(0))
+    transformFiles(folderOrFile)
+  }
+
+  def transformFiles(folderOrFile:File): List[File] = {
+    val outputFolder = setupOutputFolder(folderOrFile)
     folderOrFile.isDirectory match {
       case true =>
-        val allFiles = folderOrFile.listFiles()
-        allFiles.foreach(file => programRunner(file))
+        val allFiles = folderOrFile.listFiles().toList.filter(_.getAbsolutePath.endsWith(".xml"))
+        allFiles.map{ inputFile =>
+          val outputFile = new File(outputFolder.getAbsolutePath + File.separator + inputFile.getName)
+          transformFile(inputFile, outputFile)}
       case false =>
-        programRunner(folderOrFile)
+        val outputFile = new File(outputFolder.getAbsolutePath + File.separator + folderOrFile.getName)
+        List(transformFile(folderOrFile, outputFile))
     }
-
   }
 
-  def programRunner(fileName: File): Unit = {
-    println(s"Transforming Invoice: ${fileName.getName}" )
-    val invoiceXml = Main.loadXml(fileName)
+  def setupOutputFolder(file:File): File = {
+    val baseFolder = file.isDirectory match {
+      case true => file.getAbsolutePath
+      case false => file.getAbsoluteFile.getParentFile.getAbsolutePath
+    }
+    val outputFolder = new File(baseFolder + File.separator + "out")
+    if (!outputFolder.exists()) outputFolder.mkdirs()
+    outputFolder
+  }
+
+  def transformFile(inputFile: File, outputFile:File): File = {
+    println(s"Transforming Invoice: ${inputFile.getName}" )
+    val invoiceXml = Main.loadXml(inputFile)
     val comments = Main.extractComment(invoiceXml)
-    val invoiceInfo = InvoiceInfo(comments) //TODO
+    val invoiceInfo = InvoiceInfo(comments)
     val transformed = Main.transformXml(invoiceXml, invoiceInfo)
-    Main.save(fileName, transformed.head)
+    save(outputFile, transformed.head)
+    outputFile
   }
 
-  def loadXml(filePath: File): Elem = XML.loadFile(filePath)
+  def loadXml(filePath: File): Elem =
+    XML.loadFile(filePath)
 
-  def save(filePath: File, contents: Node): Unit = {
-    val nameString = filePath.getName
-    val dot = nameString.indexOf(".")
-    val fileName = nameString.substring(0, dot)
-    XML.save(fileName + "_modified.xml", contents, "utf-8", true)
-  }
+  def save(file: File, contents: Node): Unit =
+    XML.save(file.getAbsolutePath, contents, "utf-8", true)
+
 
   def extractComment(invoice: Elem) = {
     val comments = invoice \ "tetelek" \ "tetel" \ "megjegyzes"
@@ -63,7 +79,7 @@ object Main {
   }
 
 
-  def getRewriteRule(matchOnLabel: String, newText: String): RewriteRule = {
+  protected def getRewriteRule(matchOnLabel: String, newText: String): RewriteRule = {
     new RewriteRule {
       override def transform(n: Node): collection.Seq[Node] = n match {
         case elem: Elem if elem.label == matchOnLabel =>
