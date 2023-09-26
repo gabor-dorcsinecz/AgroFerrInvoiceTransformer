@@ -1,7 +1,7 @@
 package hu.agroferr
 
-import java.io.File
-
+import java.io.{BufferedWriter, File, FileWriter}
+import java.nio.file.{Files, Paths}
 import scala.xml.transform.{RewriteRule, RuleTransformer}
 import scala.xml.{Elem, Node, Text, XML}
 
@@ -49,8 +49,15 @@ object Main {
   def loadXml(filePath: File): Elem =
     XML.loadFile(filePath)
 
-  def save(file: File, contents: Node): Unit =
-    XML.save(file.getAbsolutePath, contents, "utf-8", true)
+  def save(file: File, contents: Node): Unit = {
+    //XML.save(file.getAbsolutePath, contents, "utf-8")
+    val theFile = scala.io.Source.fromFile(file.getAbsolutePath)
+    val bw = new BufferedWriter(new FileWriter(file))
+    bw.write("""<?xml version="1.0" encoding="UTF-8" standalone="yes"?>""")
+    bw.write(System.getProperty("line.separator"))
+    XML.write(bw,contents,"utf-8", false, null)
+    bw.close()
+  }
 
 
   def extractComment(invoice: Elem) = {
@@ -92,8 +99,8 @@ object Main {
 
 
 case class InvoiceInfo(orderNumber: String, date: String, letterNumber: String, letterDate: String)
-
 object InvoiceInfo {
+  // Information about the invoice is hidden in the comment field of the invoice, we have to extract those
   def apply(comment: String): InvoiceInfo = {
     val lines = comment.split("[\r\n]")
     InvoiceInfo(valueParser(lines(0)), transformDates(valueParser(lines(1))), valueParser(lines(2)), transformDates(valueParser(lines(3))))
