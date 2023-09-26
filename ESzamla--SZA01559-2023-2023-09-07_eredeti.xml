@@ -1,0 +1,146 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<szamla xmlns="http://www.apeh.hu/2005/szamla" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <fejlec>
+    <elado>
+      <nev>Dombegyházi EURO TÉSZ Kft.</nev>
+      <adoszam>13297150-2-04</adoszam>
+      <edikod>5990073816002</edikod>
+      <idegenkod>5990073816002</idegenkod>
+      <kozadoszam>HU13297150</kozadoszam>
+      <bankszamlaszam>11733003-27315417-00000000</bankszamlaszam>
+      <szamlatulaj />
+      <banknev>Kereskedelmi és Hitelbank Nyilvánosan Működő Rt.</banknev>
+      <bankorszagkod>HU</bankorszagkod>
+      <cim>
+        <orszag>Magyarország</orszag>
+        <telepules>Dombegyház</telepules>
+        <irszam>5836</irszam>
+        <kozternev>Nyéki</kozternev>
+        <kozterjell>major</kozterjell>
+        <hazszam>165/9.</hazszam>
+        <epulet />
+        <lepcsohaz />
+        <emelet />
+        <ajto />
+      </cim>
+    </elado>
+    <vevo>
+      <nev>Tesco-Global Áruházak ZRt.</nev>
+      <ugyfelkod>49</ugyfelkod>
+      <edikod>5990020040009</edikod>
+      <rendelesvevoedikod />
+      <adoszam>10307078-2-44</adoszam>
+      <kozadoszam>HU10307078</kozadoszam>
+      <banknev>Citibank Rt</banknev>
+      <bankorszagkod>HU</bankorszagkod>
+      <cim>
+        <orszag>Magyarország</orszag>
+        <telepules>Budaörs</telepules>
+        <irszam>2040</irszam>
+        <kozternev>Kinizsi</kozternev>
+        <kozterjell>út</kozterjell>
+        <hazszam>1-3</hazszam>
+        <epulet />
+        <lepcsohaz />
+        <emelet />
+        <ajto />
+      </cim>
+      <szallitasicim>
+        <nev>Tesco Gyál</nev>
+        <szalledikod>5990020040078</szalledikod>
+        <cim>
+          <orszag>Magyarország</orszag>
+          <telepules>Gyál</telepules>
+          <irszam>2360</irszam>
+          <kozternev>Bem József utca 23</kozternev>
+        </cim>
+      </szallitasicim>
+      <eszamlacim>
+        <nev>Központi</nev>
+        <eszlaedikod>5990020040009</eszlaedikod>
+        <cim>
+          <orszag>Magyarország</orszag>
+          <telepules>Budaörs</telepules>
+          <irszam>2040</irszam>
+          <kozternev>Kinizsi út 1-3</kozternev>
+        </cim>
+      </eszamlacim>
+      <kapcsolattarto>
+        <nev />
+        <telefon />
+      </kapcsolattarto>
+    </vevo>
+    <szamlainfo>
+      <sorszam>SZA01559/2023</sorszam>
+      <kialldatum>2023-09-07</kialldatum>
+      <teljdatum>2023-09-07</teljdatum>
+      <fizhatarido>2023-10-07</fizhatarido>
+      <elszamolaszarodatum />
+      <fizmod>Átutalás (30 nap)</fizmod>
+      <szamlatipusa>normál</szamlatipusa>
+      <hivatkozottszamla />
+      <hivatkozottszamladatum />
+      <megrendeles />
+      <megrazon />
+      <megrendelesdatum />
+      <szallitolevel />
+      <szallitoleveldatum />
+      <termekdij />
+      <egyebadat />
+      <alsomegjegyzes>A kiterjesztett gyártói felelősségi díj megfizetése az eladót terheli.
+A csomagolás termékdíj kötelezettség az eladót terheli.
+</alsomegjegyzes>
+      <penznem>HUF</penznem>
+      <cegadat_egyeb />
+      <uzemmod>T</uzemmod>
+    </szamlainfo>
+  </fejlec>
+  <tetelek>
+    <tetel id="1">
+      <termeknev>GÖRÖGDINNYE</termeknev>
+      <termekkod>2004006592765</termekkod>
+      <eankod>5998899700185</eankod>
+      <editermekkod />
+      <besorszam>08071100</besorszam>
+      <mennyegys>kg</mennyegys>
+      <menny>18600</menny>
+      <nettoegysegar>160</nettoegysegar>
+      <bruttoegysegar>203.2</bruttoegysegar>
+      <nettoar>2976000</nettoar>
+      <afakulcs>27</afakulcs>
+      <afaertek>803520</afaertek>
+      <bruttoar>3779520</bruttoar>
+      <megjegyzes>Rendelés száma: 66580554
+Rendelés dátuma: 2023.09.06.
+Szállítólevél száma: 25186
+Szállítólevél dátuma: 2023.09.06.
+ [2004006592765]
+Termékkód: 2004006592765
+Termék egyed:</megjegyzes>
+    </tetel>
+  </tetelek>
+  <osszesites>
+    <afarovat id="1">
+      <afakulcs>27</afakulcs>
+      <nettoar>2976000</nettoar>
+      <afaertek>803520</afaertek>
+      <bruttoar>3779520</bruttoar>
+      <ftafaertek>803520</ftafaertek>
+    </afarovat>
+    <vegosszeg>
+      <nettoarossz>2976000</nettoarossz>
+      <afaertekossz>803520</afaertekossz>
+      <bruttoarossz>3779520</bruttoarossz>
+      <fizetendo>3779520</fizetendo>
+      <ftafaertekossz>803520</ftafaertekossz>
+    </vegosszeg>
+  </osszesites>
+  <template>HUN</template>
+  <lablec>Köszönjük a vásárlást!
+
+
+
+A kiterjesztett gyártói felelősségi díj megfizetése az eladót terheli.
+A csomagolás termékdíj kötelezettség az eladót terheli.
+</lablec>
+</szamla>

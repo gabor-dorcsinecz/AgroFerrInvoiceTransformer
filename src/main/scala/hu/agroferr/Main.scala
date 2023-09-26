@@ -73,7 +73,6 @@ object Main {
       }
     }
     val deliveryNumRule = invoiceInfo.deliveryNumber.map(num => getAddRule("elado", <szallitoiazonosito>{num}</szallitoiazonosito>) )
-    println("EEEE: " + invoiceInfo.deliveryNumber)
 
     val allRules = List(Some(rule1), Some(rule2), Some(rule3), Some(rule4), Some(rule4Seller), deliveryNumRule).flatten
 
@@ -95,7 +94,10 @@ object Main {
     new RewriteRule {
       override def transform(n: Node) = n match {
         case n@Elem(prefix, `label`, attribs, scope, child@_*) =>
-          val allNodes = child.toList ++ newChild
+          //println("CCC: " + child.toList.map(a => a.text.toList.map(_.toInt.toHexString).mkString).mkString("\r\n"))
+          val originals = child.toList.splitAt(16)  //Every second line is a newline
+          val newLine = originals._1(0)
+          val allNodes = originals._1 ++ newLine ++ newChild  ++ originals._2
           Elem(prefix, label, attribs, scope,false, allNodes:_*)
         case other => other
       }
