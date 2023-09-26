@@ -3,7 +3,7 @@ package hu.agroferr
 import java.io.{BufferedWriter, File, FileWriter}
 import java.nio.file.{Files, Paths}
 import scala.xml.transform.{RewriteRule, RuleTransformer}
-import scala.xml.{Elem, Node, Text, XML}
+import scala.xml.{Elem, Node, NodeSeq, Text, XML}
 
 object Main {
 
@@ -39,8 +39,7 @@ object Main {
   def transformFile(inputFile: File, outputFile:File): File = {
     println(s"Transforming Invoice: ${inputFile.getName}" )
     val invoiceXml = Main.loadXml(inputFile)
-    val comments = Main.extractComment(invoiceXml)
-    val invoiceInfo = InvoiceInfo(comments)
+    val invoiceInfo = InvoiceInfo(invoiceXml)
     val transformed = Main.transformXml(invoiceXml, invoiceInfo)
     save(outputFile, transformed.head)
     outputFile
@@ -50,8 +49,6 @@ object Main {
     XML.loadFile(filePath)
 
   def save(file: File, contents: Node): Unit = {
-    //XML.save(file.getAbsolutePath, contents, "utf-8")
-    val theFile = scala.io.Source.fromFile(file.getAbsolutePath)
     val bw = new BufferedWriter(new FileWriter(file))
     bw.write("""<?xml version="1.0" encoding="UTF-8" standalone="yes"?>""")
     bw.write(System.getProperty("line.separator"))
@@ -59,11 +56,6 @@ object Main {
     bw.close()
   }
 
-
-  def extractComment(invoice: Elem) = {
-    val comments = invoice \ "tetelek" \ "tetel" \ "megjegyzes"
-    comments.toList.map(_.text).head
-  }
 
   def transformXml(invoice: Elem, invoiceInfo: InvoiceInfo) = {
     val rule1 = getRewriteRule("megrendeles", invoiceInfo.orderNumber)
@@ -80,13 +72,17 @@ object Main {
         case other => other
       }
     }
+    val deliveryNumRule = invoiceInfo.deliveryNumber.map(num => getAddRule("elado", <szallitoiazonosito>{num}</szallitoiazonosito>) )
+    println("EEEE: " + invoiceInfo.deliveryNumber)
 
-    val transformed = new RuleTransformer(rule1, rule2, rule3, rule4, rule4Seller).transform(invoice)
+    val allRules = List(Some(rule1), Some(rule2), Some(rule3), Some(rule4), Some(rule4Seller), deliveryNumRule).flatten
+
+    val transformed = new RuleTransformer(allRules: _*).transform(invoice)
     transformed
   }
 
 
-  protected def getRewriteRule(matchOnLabel: String, newText: String): RewriteRule = {
+  protected def getRewriteRule(matchOnLabel: String, newText: String): RewriteRule =
     new RewriteRule {
       override def transform(n: Node): collection.Seq[Node] = n match {
         case elem: Elem if elem.label == matchOnLabel =>
@@ -94,22 +90,54 @@ object Main {
         case other => other
       }
     }
+
+  protected def getAddRule(label: String, newChild: Node):RewriteRule = {
+    new RewriteRule {
+      override def transform(n: Node) = n match {
+        case n@Elem(prefix, `label`, attribs, scope, child@_*) =>
+          val allNodes = child.toList ++ newChild
+          Elem(prefix, label, attribs, scope,false, allNodes:_*)
+        case other => other
+      }
+    }
   }
 }
 
 
-case class InvoiceInfo(orderNumber: String, date: String, letterNumber: String, letterDate: String)
+case class InvoiceInfo(orderNumber: String, date: String, letterNumber: String, letterDate: String, deliveryNumber:Option[String])
 object InvoiceInfo {
   // Information about the invoice is hidden in the comment field of the invoice, we have to extract those
-  def apply(comment: String): InvoiceInfo = {
+  def apply(invoice: Elem): InvoiceInfo = {
+
+    val comment = extractComment(invoice)
+    val buyer = extractBuyer(invoice)
+
+
     val lines = comment.split("[\r\n]")
-    InvoiceInfo(valueParser(lines(0)), transformDates(valueParser(lines(1))), valueParser(lines(2)), transformDates(valueParser(lines(3))))
+    val pattern = """Szállítószám:\s(\d+?)\s""".r
+    val deliveryNumber = pattern.findFirstMatchIn(comment) match {
+      case Some(x) => Some(x.group(1))
+      case _ => if (buyer.toLowerCase.contains("tesco")) Some("20997040") else None
+    }
+    InvoiceInfo(valueParser(lines(0)), transformDates(valueParser(lines(1))), valueParser(lines(2)), transformDates(valueParser(lines(3))),deliveryNumber)
   }
 
   def transformDates(in: String): String = {
     val full = in.replaceAll("\\.", "- ").trim
     if (full.lastIndexOf("-") == full.length-1) full.take(full.length - 1) else full
   }
+
+
+  def extractComment(invoice: Elem) = {
+    val comments = invoice \ "tetelek" \ "tetel" \ "megjegyzes"
+    comments.toList.map(_.text).head
+  }
+
+  def extractBuyer(invoice: Elem): String = {
+    val buyer = invoice \ "fejlec" \ "vevo" \ "nev"
+    buyer.toList.map(_.text).head
+  }
+
 
   def valueParser(line: String): String = {
     val idx = line.indexOf(":")
